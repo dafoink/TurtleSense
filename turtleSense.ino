@@ -57,7 +57,7 @@ void loop()
 	readAccelerometer();
 }
 
-
+// read accelerometer into global variables.  also call triggered action method
 void readAccelerometer()
 {
 	// Accelerometer Readings
@@ -107,6 +107,7 @@ void ADXL_ISR()
 	}
 }
 
+// setup realtime clock
 void setupRTC()
 {
 	if (!rtc.begin()) 
@@ -127,6 +128,7 @@ void setupRTC()
 	now = rtc.now();
 }
 
+// initialize SD card drive
 void setupSDCard()
 {
 	Serial.print("Initializing SD card...");
@@ -143,6 +145,7 @@ void setupTempSensors()
 	tempSensors.begin();
 }
 
+// setup accelerometer
 void setupADXL()
 {
 	adxl.powerOn();                     // Power on the ADXL345
@@ -190,6 +193,7 @@ void setupADXL()
 	//attachInterrupt(digitalPinToInterrupt(interruptPin), ADXL_ISR, RISING);   // Attach Interrupt
 }
 
+// write out sensor data to SD card file.
 void writeSensorData(char* eventName)
 {
 	logFile = SD.open("data.txt", FILE_WRITE);
@@ -229,6 +233,7 @@ void writeSensorData(char* eventName)
 
 }
 
+// write the header of the output file.
 void writeHeader()
 {
 	DateTime future(now + TimeSpan(7, 12, 30, 6));
@@ -246,6 +251,7 @@ void writeHeader()
 	}
 }
 
+// used to read configuration file
 bool readConfiguration()
 {
 	const uint8_t CONFIG_LINE_LENGTH = 35;
@@ -281,11 +287,13 @@ bool readConfiguration()
 }
 
 
+// get current time and store in global variable: now
 void getTime()
 {
 	now = rtc.now();
 }
 
+// will get called and put device to sleep if settings say it should
 void sleepIfNeeded()
 {
 	if(settings.doSleep)
@@ -299,6 +307,7 @@ void sleepIfNeeded()
 }
 
 
+// get the current temperature
 void getTemperature()
 {
 	tempSensors.requestTemperatures();

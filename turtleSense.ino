@@ -137,6 +137,7 @@ void setupSDCard()
 	Serial.println("Done initializing SD card.");
 }
 
+// setup temperature sensor
 void setupTempSensors()
 {
 	tempSensors.begin();

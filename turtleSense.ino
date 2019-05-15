@@ -39,7 +39,7 @@ void setup()
 {
 	Serial.begin(115200);						// Start the serial terminal
 	delay(3000);
-
+	Serial.println("starting");
 	setupSDCard();							// setup SD Card
 	readConfiguration();
 	setupRTC();								// setup real-time clock
@@ -115,7 +115,7 @@ void setupRTC()
 		Serial.println("Couldn't find RTC");
 		while (1);
 	}
-	//rtc.adjust(DateTime(2019, 5, 9, 12, 56, 0));
+	rtc.adjust(DateTime(2019, 5, 9, 12, 56, 0));
 	if (!rtc.isrunning()) 
 	{
 		Serial.println("RTC is NOT running!");
@@ -291,6 +291,19 @@ bool readConfiguration()
 void getTime()
 {
 	now = rtc.now();
+
+	Serial.print(now.year(), DEC);
+	Serial.print('/');
+	Serial.print(now.month(), DEC);
+	Serial.print('/');
+	Serial.print(now.day(), DEC);
+	Serial.print(' ');
+	Serial.print(now.hour(), DEC);
+	Serial.print(':');
+	Serial.print(now.minute(), DEC);
+	Serial.print(':');
+	Serial.print(now.second(), DEC);
+	Serial.println();
 }
 
 // will get called and put device to sleep if settings say it should
